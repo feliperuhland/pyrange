@@ -4,13 +4,15 @@ import operator
 import re
 
 
-pattern = r'([<>=]+)?(\d+)'
+pattern = r'([<>=]+)?(\d+.?\d+?)'
 op = {
     '<': operator.lt,
     '<=': operator.le,
     '>': operator.gt,
     '>=': operator.ge,
     '=': operator.eq,
+    'and': operator.and_,
+    'or': operator.or_,
 }
 
 
@@ -44,11 +46,21 @@ class Field(object):
 
 
 class RangeField(object):
-    def __init__(self, function):
-        self.function = function
+    def __init__(self, start, end=None, cond='and'):
+        self.start = start
+        self.end = end
+        self.cond = op[cond]
 
     def __call__(self, value, field):
-        groups = re.search(pattern, self.function).groups()
-        operator_function = op[groups[0]]
-        num = int(groups[1])
-        return field if operator_function(int(value), num) else None
+        start_groups = re.search(pattern, self.start).groups()
+        start_operator_function = op[start_groups[0]]
+        start_num = float(start_groups[1])
+
+        if not self.end:
+            return field if start_operator_function(float(value), start_num) else None
+
+        end_groups = re.search(pattern, self.end).groups()
+        end_operator_function = op[end_groups[0]]
+        end_num = float(end_groups[1])
+        if self.cond(start_operator_function(float(value), start_num), end_operator_function(float(value), end_num)):
+            return field
