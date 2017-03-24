@@ -4,7 +4,7 @@ import operator
 import re
 
 
-pattern = r'([<>=]+)?(\d+.?\d+?)'
+pattern = r'([<>=]+)?(\d+(\.\d+)?)'
 op = {
     '<': operator.lt,
     '<=': operator.le,
@@ -64,3 +64,8 @@ class RangeField(object):
         end_num = float(end_groups[1])
         if self.cond(start_operator_function(float(value), start_num), end_operator_function(float(value), end_num)):
             return field
+
+
+class RangeOrField(RangeField):
+    def __init__(self, start, end=None):
+        super().__init__(start, end, 'or')

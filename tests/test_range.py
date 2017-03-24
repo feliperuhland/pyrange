@@ -25,7 +25,7 @@ class RangeFieldTenExample(pyrange.BaseRange):
 class AlvarosExample(pyrange.BaseRange):
     excelent = pyrange.RangeField('>=0.9', '<=1.2')
     good = pyrange.RangeField('<0.9', '>=0.8')
-    bad = pyrange.RangeField('<0.8', '>1.2', 'or')
+    bad = pyrange.RangeOrField('<0.8', '>1.2')
 
 
 @pytest.fixture
