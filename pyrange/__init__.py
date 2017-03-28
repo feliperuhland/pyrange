@@ -11,9 +11,10 @@ op = {
     '>': operator.gt,
     '>=': operator.ge,
     '=': operator.eq,
-    'and': operator.and_,
-    'or': operator.or_,
 }
+
+AND = operator.and_
+OR = operator.or_
 
 
 class BaseRange(object):
@@ -46,10 +47,10 @@ class Field(object):
 
 
 class RangeField(object):
-    def __init__(self, start, end=None, cond='and'):
+    def __init__(self, start, end=None, cond=AND):
         self.start = start
         self.end = end
-        self.cond = op[cond]
+        self.cond = cond
 
     def __call__(self, value, field):
         start_groups = re.search(pattern, self.start).groups()
@@ -68,4 +69,4 @@ class RangeField(object):
 
 class RangeOrField(RangeField):
     def __init__(self, start, end=None):
-        super().__init__(start, end, 'or')
+        super().__init__(start, end, cond=OR)
