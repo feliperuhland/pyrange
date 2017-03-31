@@ -3,7 +3,6 @@
 import operator
 import re
 
-
 pattern = r'([<>=]+)?(\d+(\.\d+)?)'
 op = {
     '<': operator.lt,
@@ -66,7 +65,21 @@ class RangeField(object):
         if self.cond(start_operator_function(float(value), start_num), end_operator_function(float(value), end_num)):
             return field
 
+    def __repr__(self):
+        return f'RangeField ({self.start}, {self.end}, {self.cond})'
+
 
 class RangeOrField(RangeField):
     def __init__(self, start, end=None):
         super().__init__(start, end, cond=OR)
+
+
+
+class RangeList(object):
+    def __init__(self, range_list):
+        self.range_list = range_list
+
+    def __call__(self, value, field):
+        for range_field in self.range_list:
+            if range_field(value, field):
+                return field
