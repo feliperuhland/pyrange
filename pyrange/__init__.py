@@ -66,13 +66,12 @@ class RangeField(object):
             return field
 
     def __repr__(self):
-        return f'RangeField ({self.start}, {self.end}, {self.cond})'
+        return 'RangeField ({}, {}, {})'.format(self.start, self.end, self.cond)
 
 
 class RangeOrField(RangeField):
     def __init__(self, start, end=None):
         super().__init__(start, end, cond=OR)
-
 
 
 class RangeList(object):
