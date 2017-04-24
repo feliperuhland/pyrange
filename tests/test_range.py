@@ -2,42 +2,32 @@
 
 import pytest
 
-import pyrange
+import pyrange.base
+import pyrange.fields
 
 
-class RangeExample(pyrange.BaseRange):
-    true = pyrange.Field(lambda x: x % 2 == 0)
-    false = pyrange.Field(lambda x: x % 2 != 0)
+class RangeExample(pyrange.base.BaseRange):
+    even = pyrange.fields.Field(lambda x: x % 2 == 0)
+    odd = pyrange.fields.Field(lambda x: x % 2 != 0)
 
 
-class RangeIntExample(pyrange.BaseRange):
-    _cast = int
-    true = pyrange.Field(lambda x: x % 2 == 0)
-    false = pyrange.Field(lambda x: x % 2 != 0)
+class RangeFieldTenExample(pyrange.base.BaseRange):
+    less = pyrange.fields.RangeField('<10')
+    equal = pyrange.fields.RangeField('=10')
+    more = pyrange.fields.RangeField('>10')
 
 
-class RangeFieldTenExample(pyrange.BaseRange):
-    less = pyrange.RangeField('<10')
-    equal = pyrange.RangeField('=10')
-    more = pyrange.RangeField('>10')
-
-
-class AlvarosExample(pyrange.BaseRange):
-    bad = pyrange.RangeOrField('<0.8', '>1.2')
-    good = pyrange.RangeList([
-        pyrange.RangeField('>=0.8', '<0.9'),
-        pyrange.RangeField('<=1.2', '>1.1')])
-    excelent = pyrange.RangeField('>=0.9', '<=1.1')
+class AlvarosExample(pyrange.base.BaseRange):
+    bad = pyrange.fields.RangeOrField('<0.8', '>1.2')
+    good = pyrange.fields.RangeList([
+        pyrange.fields.RangeField('>=0.8', '<0.9'),
+        pyrange.fields.RangeField('<=1.2', '>1.1')])
+    excelent = pyrange.fields.RangeField('>=0.9', '<=1.1')
 
 
 @pytest.fixture
 def range_obj():
     return RangeExample()
-
-
-@pytest.fixture
-def range_int_obj():
-    return RangeIntExample()
 
 
 @pytest.fixture
@@ -51,18 +41,11 @@ def alvaros():
 
 
 def test_simple_range(range_obj):
-    assert range_obj(0) == 'true'
-    assert range_obj(1) == 'false'
-    assert range_obj(2) == 'true'
-    assert range_obj(3) == 'false'
-    assert range_obj(4) == 'true'
-
-
-def test_simple_cast(range_int_obj):
-    assert range_int_obj(0) == 'true'
-    assert range_int_obj('1') == 'false'
-    assert range_int_obj('2') == 'true'
-    assert range_int_obj(3) == 'false'
+    assert range_obj(0) == 'even'
+    assert range_obj(1) == 'odd'
+    assert range_obj(2) == 'even'
+    assert range_obj(3) == 'odd'
+    assert range_obj(4) == 'even'
 
 
 def test_range_field_ten(range_ten):
