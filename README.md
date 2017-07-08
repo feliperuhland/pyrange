@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/feliperuhland/pyrange.svg?branch=master)](https://travis-ci.org/feliperuhland/pyrange)
+
 # PyRange
 
 Simple library to find an interval that corresponds to a certain value.
