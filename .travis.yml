@@ -6,7 +6,5 @@ python:
   - "3.5"
   - "3.6"
   - "nightly"
-install:
-  - pip install pytest
-
-script: pytest -vv
+install: pip install tox-travis
+script: tox
