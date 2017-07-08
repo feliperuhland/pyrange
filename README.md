@@ -11,8 +11,8 @@ pip install pyrange
 ## Running the tests
 
 ```
-pip install pytest
-pytest -vv
+pip install tox
+tox
 ```
 
 ## How to use
@@ -23,6 +23,7 @@ Create a class with the ranges:
 
 ```python
 import pyrange.base
+import pyrange.fields
 
 class RangeExample(pyrange.base.BaseRange):
     more = pyrange.fields.RangeField('>0')
@@ -50,6 +51,7 @@ Another example:
 
 ```python
 import pyrange.base
+import pyrange.fields
 
 class RangeExample(pyrange.base.BaseRange):
     bad = pyrange.fields.RangeOrField('<0', '>=40')

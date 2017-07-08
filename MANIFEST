@@ -2,3 +2,6 @@
 setup.cfg
 setup.py
 pyrange/__init__.py
+pyrange/base.py
+pyrange/config.py
+pyrange/fields.py

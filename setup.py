@@ -10,6 +10,7 @@ setup(
     author='Felipe Ruhland',
     author_email='felipe.ruhland@gmail.com',
     url='https://github.com/feliperuhland/pyrange',
-    download_url='https://github.com/feliperuhland/pyrange/archive/0.1.0.tar.gz',
+    download_url='https://github.com/feliperuhland/pyrange/archive/'
+    '0.1.0.tar.gz',
     keywords=['range', 'search', 'class'],
     classifiers=[])
